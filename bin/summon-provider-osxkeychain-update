@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+################################################################################
+# UPDATE A SUMMON SECRET
+################################################################################
+
+# Check for arguments
+declare current_script
+current_script=$(basename "$0")
+if [[ $# -ne 1 ]]
+then
+  echo "ERROR: Insufficient arguments!" >&2
+  echo "USAGE: ${current_script} <SUMMON_SECRET_VAR_NAME>" >&2
+  exit 1
+fi
+
+# Check OS
+if [[ "$(uname)" != "Darwin" ]]
+then
+  echo "ERROR: Unsupported OS!" >&2
+  exit 1
+fi
+
+# Check for pre-req tools
+if ! command -v "security" >/dev/null 2>&1
+then
+  echo "ERROR: 'security' is not available in the PATH" >&2
+  exit 1
+fi
+
+# https://ss64.com/osx/security-password.html
+security -q add-generic-password \
+  -s "summon"                    \
+  -a "${1}"                      \
+  -U -w
+
+################################################################################
