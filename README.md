@@ -8,11 +8,10 @@ Install using [Homebrew](https://brew.sh/):
 
 ``` bash
 # Install summon
-brew tap cyberark/tools
 brew install cyberark/tools/summon
 
 # Install this provider
-brew install summon-provider-osxkeychain
+brew install mithun/tap/summon-provider-osxkeychain
 ```
 
 Manual Install:
@@ -21,10 +20,10 @@ Manual Install:
 # Download release tarball
 cd /tmp
 curl -LOSs --fail
-  -- https://github.com/mithun/summon-provider-osxkeychain/archive/v0.1.0.tar.gz
+  -- https://github.com/mithun/summon-provider-osxkeychain/archive/v0.2.0.tar.gz
 
 # Install
-cd ./summon-provider-osxkeychain-0.1.0
+cd ./summon-provider-osxkeychain-0.2.0
 make install
 ```
 
