@@ -28,10 +28,32 @@ then
   exit 1
 fi
 
+# Find keychain to use
+declare summon_keychain=""
+if security list-keychains | grep summon >/dev/null 2>&1
+then
+  summon_keychain=$(
+    security list-keychains \
+      | grep summon         \
+      | head -1             \
+      | cut -d '"' -f2
+  )
+fi
+
+# Get account
+declare account="${1}"
+
+# Get secret
+declare secret=""
+read -s -t 60 -p "Enter Secret: " secret \
+  || exit 1
+echo ''
+
 # https://ss64.com/osx/security-password.html
 security -q add-generic-password \
   -s "summon"                    \
-  -a "${1}"                      \
-  -U -w
+  -a "${account}"                \
+  -U -w "${secret}"              \
+  "${summon_keychain}"
 
 ################################################################################

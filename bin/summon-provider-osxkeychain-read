@@ -28,10 +28,23 @@ then
   exit 1
 fi
 
+# Find keychain to use
+declare summon_keychain=""
+if security list-keychains | grep summon >/dev/null 2>&1
+then
+  summon_keychain=$(
+    security list-keychains \
+      | grep summon         \
+      | head -1             \
+      | cut -d '"' -f2
+  )
+fi
+
 # https://ss64.com/osx/security-password-mgt.html
 security -q find-generic-password \
   -s "summon"                     \
   -a "${1}"                       \
-  -w
+  -w                              \
+  "${summon_keychain}"
 
 ################################################################################
